@@ -5,8 +5,7 @@ JAILNAME=krb
 
 cp -f config/common/FreeBSD.conf ${JAILHOME}/${JAILNAME}/etc/pkg/FreeBSD.conf
 
-echo "nameserver 192.168.254.11
-search int.sina.id.au" > ${JAILHOME}/${JAILNAME}/etc/resolv.conf
+cp -f config/common/resolv.conf ${JAILHOME}/${JAILNAME}/etc/resolv.conf
 
 export http_proxy="http://squid:3128/"
 
