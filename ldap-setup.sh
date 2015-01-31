@@ -9,12 +9,12 @@ if ! [ -f CA/cacert.pem ]; then
 fi
 
 if ! [ -f CA/ldap/ldapcert.pem ]; then
-  echo "missing CA/ldap/ldapcert.pem. exiting.
+  echo "missing CA/ldap/ldapcert.pem. exiting."
   exit 1
 fi
 
 if ! [ -f CA/ldap/ldapkey.pem ]; then
-  echo "missing CA/ldap/ldapkey.pem. exiting.
+  echo "missing CA/ldap/ldapkey.pem. exiting."
   exit 1
 fi
 
@@ -24,15 +24,21 @@ cp -f config/common/resolv.conf ${JAILHOME}/${JAILNAME}/etc/resolv.conf
 
 export http_proxy="http://squid:3128/"
 
-echo y | pkg -j $JAILNAME install openldap-sasl-client cyrus-sasl-gssapi libltdl
+if ! [ -f ${JAILHOME}/${JAILNAME}/usr/local/bin/ldapsearch ]; then
+  echo y | pkg -j $JAILNAME install openldap-sasl-client cyrus-sasl-gssapi libltdl
+fi
 
 if ! [ -d /usr/ports/net/openldap24-server/work ]; then
   echo "no openldap-server port compiled. exiting."
   exit 1
 fi
-mkdir ${JAILHOME}/${JAILNAME}/usr/ports
+
+if ! [ -d ${JAILHOME}/${JAILNAME}/usr/ports ]; then
+  mkdir ${JAILHOME}/${JAILNAME}/usr/ports
+fi
 mount_nullfs /usr/ports ${JAILHOME}/${JAILNAME}/usr/ports
-jexec ${JAILNAME} csh -c "cd /usr/ports/net/openldap24-server && make install"
+jexec ${JAILNAME} sh -c "cd /usr/ports/net/openldap24-server && make -DBATCH install"
+umount ${JAILHOME}/${JAILNAME}/usr/ports
 
 echo "slapd_enable=\"YES\"" > ${JAILHOME}/${JAILNAME}/etc/rc.conf
 echo "slapd_flags='-h \"ldapi:///var/run/openldap/ldapi/ ldaps://0.0.0.0/\"'" >> ${JAILHOME}/${JAILNAME}/etc/rc.conf
@@ -44,8 +50,8 @@ fi
 
 if ! [ -d ${JAILHOME}/${JAILNAME}/usr/local/etc/openldap/private ]; then
   mkdir ${JAILHOME}/${JAILNAME}/usr/local/etc/openldap/private
-  jexec chown -R ldap:ldap ${JAILHOME}/${JAILNAME}/usr/local/etc/openldap/private
-  jexec chmod og-rwx ${JAILHOME}/${JAILNAME}/usr/local/etc/openldap/private
+  jexec ${JAILNAME} chown -R ldap:ldap ${JAILHOME}/${JAILNAME}/usr/local/etc/openldap/private
+  jexec ${JAILNAME} chmod og-rwx ${JAILHOME}/${JAILNAME}/usr/local/etc/openldap/private
 fi
 
 cp -f CA/cacert.pem ${JAILHOME}/${JAILNAME}/usr/local/etc/openldap/ssl/cacert.pem
