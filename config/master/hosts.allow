@@ -1,0 +1,7 @@
+ALL : localhost 127.0.0.1 : allow
+sendmail : localhost : allow
+rpcbind : ALL : deny
+ALL : PARANOID : RFC931 20 : deny
+sshd : /etc/hosts.deniedssh : deny
+sshd : ALL : allow
+ALL : ALL : deny
