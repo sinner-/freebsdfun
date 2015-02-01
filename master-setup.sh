@@ -139,6 +139,7 @@ cp -f config/master/jail.conf /etc/jail.conf
 
 for jail in `ls /home | grep -v nonroot`; do
   jail -cmr $jail
+  jexec $jail newaliases
 done
 
 echo "configuring pf.conf."
