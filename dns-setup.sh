@@ -28,6 +28,7 @@ echo "named_enable=\"YES\"" > ${JAILHOME}/${JAILNAME}/etc/rc.conf
 cp -f config/dns/named.conf ${JAILHOME}/${JAILNAME}/usr/local/etc/namedb
 
 cp -f config/dns/dns.int.sina.id.au ${JAILHOME}/${JAILNAME}/usr/local/etc/namedb/master
+cp -f config/dns/254.168.192.in-addr.arpa ${JAILHOME}/${JAILNAME}/usr/local/etc/namedb/master
 
 sed -i .bk '/^192.168.254.10 squid/d' ${JAILHOME}/${JAILNAME}/etc/hosts
 

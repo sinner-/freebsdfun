@@ -1,0 +1,15 @@
+$TTL 3600 ;1h TTL
+@    IN      SOA      dns.int.sina.id.au. admin.int.sina.id.au. (
+                                2015012501      ; Serial
+                                10800           ; Refresh
+                                3600            ; Retry
+                                604800          ; Expire
+                                300             ; Negative Response TTL
+                        )
+ 
+254.168.192.in-addr.arpa.                IN      NS      dns.int.sina.id.au.
+ 
+10               IN      PTR     squid.int.sina.id.au.
+11               IN      PTR     dns.int.sina.id.au.
+12               IN      PTR     ldap.int.sina.id.au.
+13               IN      PTR     krb.int.sina.id.au.

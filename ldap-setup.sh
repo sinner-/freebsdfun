@@ -18,6 +18,11 @@ if ! [ -f CA/ldap/ldapkey.pem ]; then
   exit 1
 fi
 
+if ! [ -f config/ldap/krb5.keytab ]; then
+  echo "missing config/ldap/krb5.keytab. exiting."
+  exit 1
+fi
+
 cp -f config/common/FreeBSD.conf ${JAILHOME}/${JAILNAME}/etc/pkg/FreeBSD.conf
 
 cp -f config/common/resolv.conf ${JAILHOME}/${JAILNAME}/etc/resolv.conf
@@ -50,21 +55,22 @@ fi
 
 if ! [ -d ${JAILHOME}/${JAILNAME}/usr/local/etc/openldap/private ]; then
   mkdir ${JAILHOME}/${JAILNAME}/usr/local/etc/openldap/private
-  jexec ${JAILNAME} chown -R ldap:ldap ${JAILHOME}/${JAILNAME}/usr/local/etc/openldap/private
-  jexec ${JAILNAME} chmod og-rwx ${JAILHOME}/${JAILNAME}/usr/local/etc/openldap/private
+  jexec ${JAILNAME} chown -R ldap:ldap /usr/local/etc/openldap/private
+  jexec ${JAILNAME} chmod og-rwx /usr/local/etc/openldap/private
 fi
 
 cp -f CA/cacert.pem ${JAILHOME}/${JAILNAME}/usr/local/etc/openldap/ssl/cacert.pem
 cp -f CA/ldap/ldapcert.pem ${JAILHOME}/${JAILNAME}/usr/local/etc/openldap/ssl/ldapcert.pem
 cp -f CA/ldap/ldapkey.pem ${JAILHOME}/${JAILNAME}/usr/local/etc/openldap/private/ldapkey.pem
-jexec $JAILNAME chmod og-rwx ${JAILHOME}/${JAILNAME}/usr/local/etc/openldap/private/ldapkey.pem
-jexec $JAILNAME chown ldap:ldap ${JAILHOME}/${JAILNAME}/usr/local/etc/openldap/private/ldapkey.pem
+jexec $JAILNAME chmod og-rwx /usr/local/etc/openldap/private/ldapkey.pem
+jexec $JAILNAME chown ldap:ldap /usr/local/etc/openldap/private/ldapkey.pem
 
 cp -f config/ldap/slapd.conf ${JAILHOME}/${JAILNAME}/usr/local/etc/openldap/slapd.conf
 cp -f config/ldap/ldap.conf ${JAILHOME}/${JAILNAME}/usr/local/etc/openldap/ldap.conf
 
-jexec $JAILNAME service slapd restart
+cp -f config/ldap/krb5.keytab ${JAILHOME}/${JAILNAME}/etc/krb5.keytab
+cp -f config/krb/krb5.conf ${JAILHOME}/${JAILNAME}/etc/krb5.conf
+jexec $JAILNAME chmod og-rwx /etc/krb5.keytab
+jexec $JAILNAME chown ldap:ldap /etc/krb5.keytab
 
-#cp krb5.key
-#setup ssl certs
-#add user to directory
+jexec $JAILNAME service slapd restart
