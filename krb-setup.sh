@@ -14,6 +14,10 @@ echo "kdc_enable=\"YES\"" >> ${JAILHOME}/${JAILNAME}/etc/rc.conf
 
 cp -f config/krb/krb5.conf ${JAILHOME}/${JAILNAME}/etc/krb5.conf
 
+if ! [ -f ${JAILHOME}/${JAILNAME}/var/heimdal/m-key ]; then
+  jexec ${JAILNAME} kstash --random-key
+fi
+
 jexec $JAILNAME service kdc restart
 jexec $JAILNAME service kadmind restart
 
