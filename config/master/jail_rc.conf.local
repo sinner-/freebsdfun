@@ -1,0 +1,2 @@
+syslogd_flags="-ss"
+sendmail_enable="NO"

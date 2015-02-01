@@ -130,6 +130,7 @@ for jaildir in `grep path config/master/jail.conf | awk -F \" '{print $2}'`; do
   if ! [ -d $jaildir ]; then
     mkdir $jaildir
     tar -xf base.txz -C $jaildir
+    cp -f config/master/jail_rc.conf.local $jaildir/etc/rc.conf.local
   fi
 done
 
