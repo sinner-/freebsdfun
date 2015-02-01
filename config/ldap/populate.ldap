@@ -1,0 +1,18 @@
+dn: dc=int,dc=sina,dc=id,dc=au
+objectclass: organization
+objectclass: dcObject
+objectclass: top
+o: SinaCorp
+description: root entry
+
+dn: ou=people,dc=int,dc=sina,dc=id,dc=au
+objectclass: organizationalUnit
+ou: people
+description: Users
+
+dn: uid=sina,ou=people,dc=int,dc=sina,dc=id,dc=au
+objectClass: inetOrgPerson
+cn: sina LDAP account
+uid: sina
+sn: Sadeghi
+cn: Sina

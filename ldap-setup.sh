@@ -33,17 +33,14 @@ if ! [ -f ${JAILHOME}/${JAILNAME}/usr/local/bin/ldapsearch ]; then
   echo y | pkg -j $JAILNAME install openldap-sasl-client cyrus-sasl-gssapi libltdl
 fi
 
-if ! [ -d /usr/ports/net/openldap24-server/work ]; then
-  echo "no openldap-server port compiled. exiting."
+if ! [ -d /usr/ports/net/openldap24-server ]; then
+  echo "no openldap-server port. exiting."
   exit 1
 fi
 
 if ! [ -d ${JAILHOME}/${JAILNAME}/usr/ports ]; then
   mkdir ${JAILHOME}/${JAILNAME}/usr/ports
 fi
-mount_nullfs /usr/ports ${JAILHOME}/${JAILNAME}/usr/ports
-jexec ${JAILNAME} sh -c "cd /usr/ports/net/openldap24-server && make -DBATCH install"
-umount ${JAILHOME}/${JAILNAME}/usr/ports
 
 echo "slapd_enable=\"YES\"" > ${JAILHOME}/${JAILNAME}/etc/rc.conf
 echo "slapd_flags='-h \"ldapi:///var/run/openldap/ldapi/ ldaps://0.0.0.0/\"'" >> ${JAILHOME}/${JAILNAME}/etc/rc.conf
