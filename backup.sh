@@ -5,10 +5,8 @@
 #KRB DB
 #KRB M-KEY
 #MAILBOX SINA
-#.gitignore
 
 tar -zcvf backup.tgz \
-.gitignore \
 CA \
 /usr/home/ldap/var/db/openldap-data/data.mdb \
 /usr/home/krb/var/heimdal/heimdal.db \

@@ -1,0 +1,9 @@
+CA/cacert.pem
+CA/cacert.srl
+CA/cakey.pem
+CA/ldap/
+CA/sina.id.au/
+base.txz
+config/ldap/krb5.keytab
+config/master/authorized_keys
+backup.tgz
