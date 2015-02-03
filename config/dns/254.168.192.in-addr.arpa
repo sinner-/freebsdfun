@@ -9,6 +9,7 @@ $TTL 3600 ;1h TTL
  
 254.168.192.in-addr.arpa.                IN      NS      dns.int.sina.id.au.
  
+9		 IN      PTR     master.int.sina.id.au.
 10               IN      PTR     squid.int.sina.id.au.
 11               IN      PTR     dns.int.sina.id.au.
 12               IN      PTR     ldap.int.sina.id.au.
