@@ -19,6 +19,8 @@ cp -f config/common/FreeBSD.conf ${JAILHOME}/${JAILNAME}/etc/pkg/FreeBSD.conf
 
 echo "192.168.254.10 squid" >> ${JAILHOME}/${JAILNAME}/etc/hosts
 
+jexec $JAILNAME squid -z
+
 jexec $JAILNAME service squid restart
 
 sed -i .bk '/^192.168.254.10 squid/d' ${JAILHOME}/${JAILNAME}/etc/hosts
