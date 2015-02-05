@@ -23,6 +23,15 @@ if ! [ -f ${JAILHOME}/${JAILNAME}/etc/aliases.db ]; then
   jexec $JAILNAME newaliases
 fi
 
+mkdir ${JAILHOME}/${JAILNAME/usr/local/etc/postfix/ssl
+mkdir ${JAILHOME}/${JAILNAME/usr/local/etc/postfix/private
+
+cp -f CA/sina.id.au/sina.id.au-key.pem ${JAILHOME}/${JAILNAME/usr/local/etc/postfix/private/sina.id.au-key-crypted.pem
+cp -f CA/sina.id.au/sina.id.au-cert.pem ${JAILHOME}/${JAILNAME/usr/local/etc/postfix/ssl
+cp -f CA/sina.id.au/godaddy-bundle.pem ${JAILHOME}/${JAILNAME/usr/local/etc/postfix/ssl
+jexec $JAILNAME openssl rsa -in /usr/local/etc/postfix/private/sina.id.au-key-crypted.pem -out /usr/local/etc/postfix/private/sina.id.au-key.pem
+jexec $JAILNAME chmod -R o-rwx /usr/local/etc/postfix/private
+
 jexec $JAILNAME service sendmail onestop
 jexec $JAILNAME postmap /usr/local/etc/postfix/main.cf
 #jexec $JAILNAME postmap /usr/local/etc/postfix/bounce.cf
