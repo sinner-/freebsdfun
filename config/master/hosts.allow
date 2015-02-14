@@ -1,4 +1,4 @@
-ALL : PARANOID : RFC931 20 : deny
+ALL : RFC931 20 : deny
 ALL : localhost 127.0.0.1 : allow
 sendmail : localhost : allow
 rpcbind : ALL : deny
