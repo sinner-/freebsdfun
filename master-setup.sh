@@ -117,7 +117,7 @@ else
   echo "defaultrouter=\"$NETIF_ROUTE\"" >> /etc/rc.conf
 fi
 
-service netif restart ; service routing restart
+service netif start ; service routing restart
 
 cp -f config/master/resolv.conf /etc/resolv.conf
 
