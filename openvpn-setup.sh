@@ -21,6 +21,7 @@ cp -f CA/openvpn/openvpnkey.nocrypt.pem /usr/local/etc/ssl/private/server.key
 cp -f CA/openvpn/openvpncert.pem /usr/local/etc/ssl/server.crt
 cp -f CA/cacert.pem /usr/local/etc/ssl/ca.crt
 cp -f CA/openvpn/dh2048.pem /usr/local/etc/ssl/dh2048.pem
+cp -f CA/openvpn/ta.key /usr/local/etc/ssl/private
 
 chmod -R og-rwx /usr/local/etc/ssl/private
 
